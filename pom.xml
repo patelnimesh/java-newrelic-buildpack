@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.0.4</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.example</groupId>
+    <artifactId>java-newrelic-buildpack</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>java-newrelic-buildpack</name>
+    <description>Demo project for Spring Boot</description>
+
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <image>
+                        <name>${project.artifactId}:${project.version}</name>
+                        <env>
+                            <BP_JVM_VERSION>17.*</BP_JVM_VERSION>
+                            <BP_SPRING_CLOUD_BINDINGS_DISABLED>true</BP_SPRING_CLOUD_BINDINGS_DISABLED>
+                        </env>
+                        <buildpacks>
+                            <!--
+                            build-image goal works with 8.9.0 version of the java buildpack
+                            <buildpack>gcr.io/paketo-buildpacks/java</buildpack>
+                            -->
+                            <buildpack>gcr.io/paketo-buildpacks/java</buildpack>
+                            <buildpack>gcr.io/paketo-buildpacks/new-relic</buildpack>
+                        </buildpacks>
+                        <bindings>
+                            <binding>${basedir}/bindings/new-relic:/platform/bindings/new-relic:ro</binding>
+                        </bindings>
+                    </image>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
