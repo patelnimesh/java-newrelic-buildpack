@@ -45,7 +45,7 @@
                         <buildpacks>
                             <!--
                             build-image goal works with 8.9.0 version of the java buildpack
-                            <buildpack>gcr.io/paketo-buildpacks/java</buildpack>
+                            <buildpack>gcr.io/paketo-buildpacks/java:8.9.0</buildpack>
                             -->
                             <buildpack>gcr.io/paketo-buildpacks/java</buildpack>
                             <buildpack>gcr.io/paketo-buildpacks/new-relic</buildpack>
